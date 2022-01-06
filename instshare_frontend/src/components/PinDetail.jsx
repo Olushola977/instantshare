@@ -63,6 +63,7 @@ const PinDetail = ({user}) => {
     if(!pinDetail) return <Spinner message="Loading Pin...." />
 
     return (
+        <>
         <div className="flex xl-flex-row flex-col m-auto bg-white" style={{maxWidth: '1500px', borderRadius: '32px'}}>
             <div className="flex justify-center items-center md:items-start flex-initial">
                 <img 
@@ -88,7 +89,7 @@ const PinDetail = ({user}) => {
                         target="_blank"
                         rel="noreferrer"
                     >
-                        {pinDetail.destination.slice(8, 20)}
+                        {`${pinDetail.destination.slice(8, 20)}...`}
                     </a>
                 </div>
                 <div>
@@ -108,13 +109,13 @@ const PinDetail = ({user}) => {
                     {pinDetail?.comments?.map((comment, i) => (
                         <div className="flex gap-2 mt-5 items-center bg-white rounded-lg" key={i}>
                             <img
-                                src={comment.postedBy.image}
+                                src={comment?.postedBy?.image}
                                 alt="user-profile"
                                 className="w-10 h-10 rounded-full cursor-pointer"
                             />
                             <div className="flex flex-col">
-                                <p className="font-bold"> {comment.postedBy.userName} </p>
-                                <p> {comment.comment} </p>
+                                <p className="font-bold"> {comment?.postedBy?.userName} </p>
+                                <p> {comment?.comment} </p>
                             </div>
                         </div>
                     ))}
@@ -124,7 +125,7 @@ const PinDetail = ({user}) => {
                         to={`user-profile/${pinDetail.postedBy?._id}`}
                         >
                         <img 
-                            src={pinDetail.postedBy?.image} 
+                            src={pinDetail?.postedBy?.image} 
                             className="w-10 h-10 cursor-pointer rounded-full object-cover"
                             alt="postedBy Image"
                         />
@@ -136,10 +137,19 @@ const PinDetail = ({user}) => {
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}    
                     />
-                    <button type="button" className="bg-red-500 text-white px-6 py-2 font-semibold outline-none rounded-full" onClick={addComment}> {addingComment ? 'Posting the Comment' : 'Posted!'} </button>
+                    <button type="button" className="bg-red-500 text-white px-6 py-2 font-semibold outline-none rounded-full" onClick={addComment}> {addingComment ? 'Posting the Comment' : 'Post'} </button>
                 </div>
             </div>
         </div>
+        {pins?.length > 0 ? (
+            <>
+                <h2 className="text-center font-bold text-2xl mt-8 mb-4">More like this</h2>
+                <MansoryLayout pins={pins} />
+            </>
+        ) : (
+            <Spinner message="Loading more Pins..." />
+        )}
+        </>
     )
 }
 
