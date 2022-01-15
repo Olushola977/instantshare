@@ -14,7 +14,7 @@ const Pin = ({ pin:{ postedBy,image, _id, destination, save } }) => {
     const user = fetchUser();
 
     //check if the user has saved the post (the !! befre the function is to return a boolean result)
-    const alreadySaved = !!(save?.filter((item) => item.postedBy._id === user?.googleId))?.length;
+    const alreadySaved = !!(save?.filter((item) => item?.postedBy?._id === user?.googleId))?.length;
 
     const [postHovered, setPostHovered] = useState(false);
 
